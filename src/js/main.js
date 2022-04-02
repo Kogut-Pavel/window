@@ -1,11 +1,8 @@
-const popupEngineer = document.querySelector('.popup_engineer');
-const popupClose = document.querySelector('.popup_close');
-const popupEngineerBtn = document.querySelector('.popup_engineer_btn');
+import "./slider";
+import modals from "./modules/modals";
 
-popupEngineerBtn.addEventListener('click', () => {
-    popupEngineer.style.display = 'block';
-});
+window.addEventListener('DOMContentLoaded', () => {
 
-popupClose.addEventListener('click', () => {
-    popupEngineer.style.display = 'none';
+   modals();
+
 });
