@@ -1,14 +1,10 @@
-const forms = () => {
+import checkNumInputs from "./checkNumInputs";
+
+const forms = (state) => {
     const form = document.querySelectorAll('form');
     const inputs = document.querySelectorAll('input');
-    const phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
-    // Всем инпутам с вводом телефона разрешаем только цифры
-    phoneInputs.forEach(item => {
-        item.addEventListener('input', () => {
-            item.value = item.value.replace(/\D/, '');
-        });
-    });
+    checkNumInputs('input[name="user_phone"]');
 
     const message = { // Объект со статусами
         loading: 'Загрузка...',
@@ -42,6 +38,11 @@ const forms = () => {
             item.appendChild(statusMessage);
 
             const formData = new FormData(item); // Собираем данные из формы
+            if (item.getAttribute('data-calc') === 'end') {
+                for (let key in state) {
+                    formData.append(key, state[key]);
+                }
+            }
 
             // Отправляем запрос на сервер с данными из formData
             postData('assets/server.php', formData)
