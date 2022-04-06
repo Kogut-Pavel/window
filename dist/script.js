@@ -17815,7 +17815,7 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener('DOMContentLoaded', function () {
   var modalState = {};
   Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__["default"])(modalState);
-  Object(_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  Object(_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])(modalState);
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active');
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
@@ -17923,6 +17923,77 @@ var checkNumInputs = function checkNumInputs(selector) {
 
 /***/ }),
 
+/***/ "./src/js/modules/clearInputs.js":
+/*!***************************************!*\
+  !*** ./src/js/modules/clearInputs.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var clearInputs = function clearInputs() {
+  // Очищаем инпуты
+  var inputs = document.querySelectorAll('input');
+  inputs.forEach(function (item) {
+    item.value = '';
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (clearInputs);
+
+/***/ }),
+
+/***/ "./src/js/modules/clearState.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/clearState.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var clearState = function clearState(state) {
+  // Очищаем объект state
+  for (var key in state) {
+    delete state[key];
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (clearState);
+
+/***/ }),
+
+/***/ "./src/js/modules/closeModals.js":
+/*!***************************************!*\
+  !*** ./src/js/modules/closeModals.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var closeModals = function closeModals() {
+  // Скрываем все модальные окна и возвращаем скролл
+  var windows = document.querySelectorAll('[data-modal]');
+  windows.forEach(function (item) {
+    item.style.display = 'none';
+    document.body.style.overflow = "";
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (closeModals);
+
+/***/ }),
+
 /***/ "./src/js/modules/forms.js":
 /*!*********************************!*\
   !*** ./src/js/modules/forms.js ***!
@@ -17943,6 +18014,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _checkNumInputs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./checkNumInputs */ "./src/js/modules/checkNumInputs.js");
+/* harmony import */ var _closeModals__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./closeModals */ "./src/js/modules/closeModals.js");
+/* harmony import */ var _clearState__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./clearState */ "./src/js/modules/clearState.js");
+/* harmony import */ var _clearInputs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./clearInputs */ "./src/js/modules/clearInputs.js");
+
+
+
 
 
 
@@ -17952,7 +18029,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var forms = function forms(state) {
   var form = document.querySelectorAll('form');
-  var inputs = document.querySelectorAll('input');
   Object(_checkNumInputs__WEBPACK_IMPORTED_MODULE_5__["default"])('input[name="user_phone"]');
   var message = {
     // Объект со статусами
@@ -17991,13 +18067,6 @@ var forms = function forms(state) {
     });
   };
 
-  var clearInputs = function clearInputs() {
-    // Очищаем инпуты
-    inputs.forEach(function (item) {
-      item.value = '';
-    });
-  };
-
   form.forEach(function (item) {
     // Перебираем формы и навешиваем обработчик события
     item.addEventListener('submit', function (event) {
@@ -18015,16 +18084,19 @@ var forms = function forms(state) {
       } // Отправляем запрос на сервер с данными из formData
 
 
-      postData('assets/server.php', formData).then(function (res) {
-        console.log(res);
+      postData('assets/server.php', formData).then(function () {
         statusMessage.textContent = message.success;
       }).catch(function () {
         statusMessage.textContent = message.failure;
       }).finally(function () {
-        clearInputs();
+        Object(_clearInputs__WEBPACK_IMPORTED_MODULE_8__["default"])();
+        console.log(state);
+        Object(_clearState__WEBPACK_IMPORTED_MODULE_7__["default"])(state);
+        console.log(state);
         setTimeout(function () {
+          Object(_closeModals__WEBPACK_IMPORTED_MODULE_6__["default"])();
           statusMessage.remove();
-        }, 5000);
+        }, 6000);
       });
     });
   });
@@ -18045,40 +18117,43 @@ var forms = function forms(state) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _closeModals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./closeModals */ "./src/js/modules/closeModals.js");
+/* harmony import */ var _clearState__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./clearState */ "./src/js/modules/clearState.js");
+/* harmony import */ var _clearInputs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./clearInputs */ "./src/js/modules/clearInputs.js");
 
 
-var modals = function modals() {
+
+
+
+var modals = function modals(state) {
   function bindModal(triggerSelector, modalSelector, closeSelector) {
     var closeClickOverlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     var trigger = document.querySelectorAll(triggerSelector);
     var modal = document.querySelector(modalSelector);
     var close = document.querySelector(closeSelector);
-    var windows = document.querySelectorAll('[data-modal]');
     trigger.forEach(function (item) {
       item.addEventListener('click', function (event) {
         if (event.target) {
           event.preventDefault();
         }
 
-        windows.forEach(function (item) {
-          item.style.display = 'none';
-        });
+        Object(_closeModals__WEBPACK_IMPORTED_MODULE_1__["default"])();
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
       });
     });
     close.addEventListener('click', function () {
-      windows.forEach(function (item) {
-        item.style.display = 'none';
-      });
+      Object(_closeModals__WEBPACK_IMPORTED_MODULE_1__["default"])();
+      Object(_clearState__WEBPACK_IMPORTED_MODULE_2__["default"])(state);
+      Object(_clearInputs__WEBPACK_IMPORTED_MODULE_3__["default"])();
       modal.style.display = 'none';
       document.body.style.overflow = "";
     });
     modal.addEventListener('click', function (event) {
       if (event.target === modal && closeClickOverlay) {
-        windows.forEach(function (item) {
-          item.style.display = 'none';
-        });
+        Object(_closeModals__WEBPACK_IMPORTED_MODULE_1__["default"])();
+        Object(_clearState__WEBPACK_IMPORTED_MODULE_2__["default"])(state);
+        Object(_clearInputs__WEBPACK_IMPORTED_MODULE_3__["default"])();
         modal.style.display = 'none';
         document.body.style.overflow = "";
       }

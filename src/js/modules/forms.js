@@ -1,8 +1,10 @@
 import checkNumInputs from "./checkNumInputs";
+import closeModals from "./closeModals";
+import clearState from "./clearState";
+import clearInputs from "./clearInputs";
 
 const forms = (state) => {
     const form = document.querySelectorAll('form');
-    const inputs = document.querySelectorAll('input');
 
     checkNumInputs('input[name="user_phone"]');
 
@@ -20,12 +22,6 @@ const forms = (state) => {
         });
 
         return await res.text();
-    };
-
-    const clearInputs = () => { // Очищаем инпуты
-        inputs.forEach(item => {
-            item.value = '';
-        });
     };
 
     form.forEach(item => { // Перебираем формы и навешиваем обработчик события
@@ -46,8 +42,7 @@ const forms = (state) => {
 
             // Отправляем запрос на сервер с данными из formData
             postData('assets/server.php', formData)
-                .then(res => {
-                    console.log(res);
+                .then(() => {
                     statusMessage.textContent = message.success;
                 })
                 .catch(() => {
@@ -55,9 +50,13 @@ const forms = (state) => {
                 })
                 .finally(() => {
                     clearInputs();
+                    console.log(state);
+                    clearState(state);
+                    console.log(state);
                     setTimeout(() => {
+                        closeModals();
                         statusMessage.remove();
-                    }, 5000);
+                    }, 6000);
                 })
         });
     });

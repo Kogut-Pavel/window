@@ -1,40 +1,38 @@
-const modals = () => {
+import closeModals from "./closeModals";
+import clearState from "./clearState";
+import clearInputs from "./clearInputs";
+
+const modals = (state) => {
 
     function bindModal(triggerSelector, modalSelector, closeSelector, closeClickOverlay = true) {
         const trigger = document.querySelectorAll(triggerSelector);
         const modal = document.querySelector(modalSelector);
         const close = document.querySelector(closeSelector);
-        const windows = document.querySelectorAll('[data-modal]');
 
         trigger.forEach(item => {
            item.addEventListener('click', (event) => {
                if (event.target) {
                    event.preventDefault();
                }
-
-               windows.forEach(item => {
-                    item.style.display = 'none';
-               });
-
+               closeModals();
                modal.style.display = "block";
                document.body.style.overflow = "hidden";
            });
         });
 
         close.addEventListener('click', () => {
-            windows.forEach(item => {
-                item.style.display = 'none';
-            });
-
+            closeModals();
+            clearState(state);
+            clearInputs();
             modal.style.display = 'none';
             document.body.style.overflow = "";
         });
 
         modal.addEventListener('click', (event) => {
             if (event.target === modal && closeClickOverlay) {
-                windows.forEach(item => {
-                    item.style.display = 'none';
-                });
+                closeModals();
+                clearState(state);
+                clearInputs();
                 modal.style.display = 'none';
                 document.body.style.overflow = "";
             }
