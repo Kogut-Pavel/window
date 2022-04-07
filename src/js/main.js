@@ -7,6 +7,10 @@ import timer from "./modules/timer";
 import images from "./modules/images";
 
 window.addEventListener('DOMContentLoaded', () => {
+   const wow = require('wow.js');
+   window.wow = new wow();
+   window.wow.init();
+
    let modalState = {};
    let deadline = '2022-10-15';
 

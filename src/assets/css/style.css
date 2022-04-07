@@ -18,6 +18,19 @@ body {
   color: red;
 }
 
+.faded {
+  animation: faded 1.5s;
+}
+
+@keyframes faded {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 a:hover {
   text-decoration: none;
 }
@@ -540,6 +553,7 @@ textarea:focus {
   padding: 2rem 0;
   background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), color-stop(0%, #ebebeb), to(rgba(255, 255, 255, 0)));
   background: linear-gradient(180deg, #ebebeb 0%, #ebebeb 0%, rgba(255, 255, 255, 0) 100%);
+  transition: all 1s linear;
 }
 
 .decoration_content {
@@ -1047,6 +1061,7 @@ textarea:focus {
   right: 0;
   bottom: 0;
   left: 0;
+  overflo
 }
 
 .checkbox-custom[id="cold"]::before {
@@ -1063,7 +1078,7 @@ textarea:focus {
 
 .popup_calc_profile_content .label {
   padding: 1.3rem 2rem;
-  z-index: 18rem;
+  z-index: 18;
   color: #000000;
   font-size: 1.5rem;
   font-weight: 500;

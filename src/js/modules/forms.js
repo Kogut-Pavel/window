@@ -1,7 +1,7 @@
-import checkNumInputs from "./checkNumInputs";
-import closeModals from "./closeModals";
-import clearState from "./clearState";
-import clearInputs from "./clearInputs";
+import {checkNumInputs} from "../services/services";
+import {closeModals} from "../services/services";
+import {clearState} from "../services/services";
+import {clearInputs} from "../services/services";
 
 const forms = (state) => {
     const form = document.querySelectorAll('form');
@@ -50,9 +50,7 @@ const forms = (state) => {
                 })
                 .finally(() => {
                     clearInputs();
-                    console.log(state);
                     clearState(state);
-                    console.log(state);
                     setTimeout(() => {
                         closeModals();
                         statusMessage.remove();

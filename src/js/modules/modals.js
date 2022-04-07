@@ -1,6 +1,8 @@
-import closeModals from "./closeModals";
-import clearState from "./clearState";
-import clearInputs from "./clearInputs";
+import {closeModals} from "../services/services";
+import {clearState} from "../services/services";
+import {clearInputs} from "../services/services";
+import {calcScroll} from "../services/services";
+import {modifyBody} from "../services/services";
 
 const modals = (state) => {
 
@@ -8,6 +10,7 @@ const modals = (state) => {
         const trigger = document.querySelectorAll(triggerSelector);
         const modal = document.querySelector(modalSelector);
         const close = document.querySelector(closeSelector);
+        const scroll = calcScroll();
 
         trigger.forEach(item => {
            item.addEventListener('click', (event) => {
@@ -16,7 +19,7 @@ const modals = (state) => {
                }
                closeModals();
                modal.style.display = "block";
-               document.body.style.overflow = "hidden";
+               modifyBody('hidden', scroll);
            });
         });
 
@@ -24,8 +27,7 @@ const modals = (state) => {
             closeModals();
             clearState(state);
             clearInputs();
-            modal.style.display = 'none';
-            document.body.style.overflow = "";
+            modifyBody('', 0);
         });
 
         modal.addEventListener('click', (event) => {
@@ -33,8 +35,7 @@ const modals = (state) => {
                 closeModals();
                 clearState(state);
                 clearInputs();
-                modal.style.display = 'none';
-                document.body.style.overflow = "";
+                modifyBody('', 0);
             }
         });
     }
@@ -45,6 +46,8 @@ const modals = (state) => {
             document.body.style.overflow = "hidden";
         }, time);
     }
+
+
 
     bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
     bindModal('.phone_link', '.popup', '.popup .popup_close');

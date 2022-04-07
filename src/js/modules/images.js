@@ -1,9 +1,14 @@
+import {calcScroll} from "../services/services";
+import {modifyBody} from "../services/services";
+
 const images = () => {
     const imgPopup = document.createElement('div');
     const workSection = document.querySelector('.works');
     const bigImage = document.createElement('img');
+    const scroll = calcScroll();
 
     imgPopup.classList.add('popup');
+    imgPopup.classList.add('animated', 'fadeIn');
     workSection.appendChild(imgPopup);
 
     imgPopup.style.cssText = `
@@ -26,12 +31,12 @@ const images = () => {
             imgPopup.style.display = 'flex';
             const path = target.parentNode.getAttribute('href');
             bigImage.setAttribute('src', path);
-            document.body.style.overflow = "hidden";
+            modifyBody('hidden', scroll);
         }
 
         if (target && target.matches('div.popup')) {
             imgPopup.style.display = 'none';
-            document.body.style.overflow = "";
+            modifyBody('', 0);
         }
     });
 
